@@ -1,0 +1,93 @@
+#!/usr/bin/env bash
+# TODO port to zsh?
+
+if [ -z "$LISTDIR" ]; then
+	echo "Must configure list directory"
+	exit
+fi
+
+commitchanges() {
+	pushd $LISTDIR > /dev/null
+	git add . > /dev/null
+	git commit -m "Auto-commit" > /dev/null
+	popd > /dev/null
+}
+
+if [ -z "$1" ]; then
+	echo "Available lists:"
+	ls $LISTDIR/
+	exit
+fi
+
+case "$1" in
+"--grep")
+	if [ -z "$2" ]; then
+		echo "Need grep pattern"
+	else
+		grep -Rin "$2" $LISTDIR --exclude=.git
+	fi
+	exit 0
+	;;
+esac
+
+case "$2" in
+"")
+	if [ "$1" == "--history" ]; then
+		pushd "$LISTDIR" > /dev/null
+		git log -p
+		popd > /dev/null
+	else
+		cat "$LISTDIR/$1" 2> /dev/null || echo "No list named '$1'"
+	fi
+	;;
+
+"--edit")
+	"$FILEEDITOR" "$LISTDIR/$1"
+	commitchanges
+	;;
+
+# "--alias")
+# 	echo alias "${3:-$1}"="'list $1'" >> ~/.bash_profile
+# 	echo Created alias: "${3:-$1}"="'list $1'"
+# 	source ~/.bash_profile
+# 	;;
+
+"--delete")
+	rm "$LISTDIR/$1"
+	commitchanges
+	;;
+
+"--rename")
+	if [ -z "$3" ]; then
+		echo "Need new list name"
+	elif [ -f "$LISTDIR/$3" ]; then
+		echo "List '$3' already exists!"
+	else
+		mv "$LISTDIR/$1" "$LISTDIR/$3"
+		commitchanges
+	fi
+	;;
+
+"--using")
+	cat >> "$LISTDIR/$1"
+	commitchanges
+	;;
+
+"--history")
+	pushd $LISTDIR > /dev/null
+	git log -p -- "$1"
+	popd > /dev/null
+	;;
+
+"--merge")
+	cat "$LISTDIR/$3" >> "$LISTDIR/$1"
+	rm "$LISTDIR/$3"
+	commitchanges
+	;;
+
+*)
+	echo "${@:2}" >> "$LISTDIR/$1"
+	commitchanges
+	;;
+
+esac

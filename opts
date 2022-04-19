@@ -1,0 +1,6 @@
+#!/bin/zsh
+# Command prompt
+# Case insensitive
+# etc.
+
+# export PS1="%{$PROMPT_SUCCESS_COLOR%}%~%{$reset_color%}%{$GIT_PROMPT_INFO%}$(git_prompt_info)$(virtualenv_prompt_info)%{$GIT_DIRTY_COLOR%}$(git_prompt_status) %{$reset_color%}%{$PROMPT_PROMPT%}♘%{$reset_color%}"

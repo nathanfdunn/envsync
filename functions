@@ -1,0 +1,76 @@
+#!/bin/zsh
+
+# proj() {
+# 	if [[ "$1" == "-l" ]]; then
+# 		ls ~/Projects
+# 		return
+# 	fi
+# 	if [[ -n "$2" ]]; then
+# 		mkdir ~/Projects/"$1"
+# 		git init ~/Projects/"$1"
+# 		echo "# $1" > ~/Projects/"$1"/README.md
+# 	fi
+# 	pushd ~/Projects/"$1"
+# }
+
+# _proj_options() {
+# 	local cur
+# 	cur=$(awk '{print tolower($0)}' <<< ${COMP_WORDS[COMP_CWORD]})
+
+# 	if [[ $COMP_CWORD -eq 1 ]]; then
+# 		COMPREPLY=( $(compgen -W "$(ls ~/Projects | awk '{print tolower($0)}')" -- $cur) )
+# 	fi
+# }
+# complete -F _proj_options proj
+
+
+op () {
+	if [[ $# -eq 0 ]]; then
+		open .
+	else
+		open "$*"
+	fi
+}
+
+
+newcommand() {
+	if [[ "$1" == "--local" ]]; then
+		NEWCOMMANDFILELOC="$LOCALCOMMANDDIR/$2"
+	else
+		NEWCOMMANDFILELOC="$COMMANDDIR/$1"
+	fi
+
+	echo "$DEFAULTSHEBANG" > "$NEWCOMMANDFILELOC"
+	chmod +x "$NEWCOMMANDFILELOC"
+	"$FILEEDITOR" "$NEWCOMMANDFILELOC"
+}
+
+newgo() {
+	# 
+}
+
+
+# TODO make project dir variable and figure out install script
+proj() {
+	if [[ "$1" == "-l" ]]; then
+		ls ~/Projects
+		return
+	fi
+	if [[ -n "$2" ]]; then
+		mkdir ~/Projects/"$1"
+		git init ~/Projects/"$1"
+		echo "# $1" > ~/Projects/"$1"/README.md
+	fi
+	pushd ~/Projects/"$1"
+}
+
+_proj_options() {
+	local cur
+	cur=$(awk '{print tolower($0)}' <<< ${COMP_WORDS[COMP_CWORD]})
+
+	if [[ $COMP_CWORD -eq 1 ]]; then
+		COMPREPLY=( $(compgen -W "$(ls ~/Projects | awk '{print tolower($0)}')" -- $cur) )
+	fi
+}
+
+complete -F _proj_options proj

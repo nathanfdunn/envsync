@@ -1,0 +1,21 @@
+#!/usr/bin/env bash
+# This is an optional step if you would like shell-completion:
+# Copy and paste this into your ~/.bash_profile, ~/.bashrc, or what have you
+
+_list_options() {
+	local cur
+	cur=${COMP_WORDS[COMP_CWORD]}
+
+	if [ $COMP_CWORD -eq 1 ]
+	then
+		COMPREPLY=( $(compgen -W "$(ls $LISTDIR) --history" -- $cur) )
+	elif [ $COMP_CWORD -eq 2 ]
+	then
+		COMPREPLY=( $(compgen -W '--edit --alias --delete --history --rename --using --merge' -- $cur) )
+	elif [ $COMP_CWORD -eq 3 ]
+	then
+		COMPREPLY=( $(compgen -W "$(ls $LISTDIR) --history" -- $cur) )
+	fi
+}
+
+complete -F _list_options list

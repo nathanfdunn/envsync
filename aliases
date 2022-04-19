@@ -1,0 +1,14 @@
+alias gozdot='pushd "$ZDOTDIR"'
+alias dsk='pushd ~/Desktop'
+alias py="python3"
+
+alias g='git'
+alias gc='git checkout'
+alias gs='git status'
+alias gb='git branch'
+alias gr='git remote'
+alias grv='git remote -v'
+alias gl='git log'
+alias gd='git diff'
+alias gacm='git acm'
+alias graph="git log --graph --pretty='%h %<(10,trunc)%an   %<(30,trunc)%s'"

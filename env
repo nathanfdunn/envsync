@@ -1,0 +1,11 @@
+#!/bin/zsh
+
+# export LISTDIR=$ZDOTDIR/Lists
+export COMMANDDIR=$ZDOTDIR/Commands
+export LOCALFOLDER=$ZDOTDIR/local
+export LOCALCOMMANDDIR="$LOCALFOLDER/Commands"
+export DEFAULTSHEBANG='#!/bin/zsh'
+export FILEEDITOR=vim
+
+
+# export PROJDIR="$HOME/Projects"

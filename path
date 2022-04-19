@@ -1,0 +1,3 @@
+
+export PATH="$COMMANDDIR:$PATH"
+export PATH="$LOCALFOLDER/Commands:$PATH"

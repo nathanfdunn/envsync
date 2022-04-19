@@ -16,6 +16,7 @@ touch "$LOCALFOLDER/aliases"
 touch "$LOCALFOLDER/functions"
 touch "$LOCALFOLDER/opts"
 touch "$LOCALFOLDER/gotos"
+git init "$HERE/local"
 
 chmod -R +x "$HERE/Commands/"
 chmod -R +x "$LOCALFOLDER/Commands/"

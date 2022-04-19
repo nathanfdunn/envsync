@@ -10,5 +10,5 @@ alias gr='git remote'
 alias grv='git remote -v'
 alias gl='git log'
 alias gd='git diff'
-alias gacm='git acm'
+alias gacm='git add . && git commit -m'
 alias graph="git log --graph --pretty='%h %<(10,trunc)%an   %<(30,trunc)%s'"
